@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import logo from "./logo1.png";
 import {
   Button,
-  Input,
   FormControl,
   InputLabel,
   Link,
   Container,
   Typography,
   Box,
+  Input,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import OTPInput from "react-otp-input";
 
 const ForgotComponent = () => {
   const Navigate = useNavigate();
@@ -22,6 +23,7 @@ const ForgotComponent = () => {
 
   const [isOTPFieldEnabled, setIsOTPFieldEnabled] = useState(false);
   const [isEmailFieldLocked, setIsEmailFieldLocked] = useState(false);
+  const [isEmailValidState, setIsEmailValidState] = useState(true);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -29,10 +31,10 @@ const ForgotComponent = () => {
       ...inputs,
       [name]: value,
     });
+    setIsEmailValidState(isEmailValid(value));
   };
 
   const isEmailValid = (email) => {
-    // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -40,7 +42,7 @@ const ForgotComponent = () => {
   const handleGetOTP = () => {
     console.log(inputs);
     setIsOTPFieldEnabled(true);
-    setIsEmailFieldLocked(true); // Lock the email field
+    setIsEmailFieldLocked(true);
   };
 
   const handleConfirmOTP = () => {
@@ -89,20 +91,51 @@ const ForgotComponent = () => {
                 value={inputs.email}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
-                disabled={isEmailFieldLocked} // Disable the email field if it's locked
+                disabled={isEmailFieldLocked}
               />
+              {!isEmailValidState && (
+                <Typography sx={{ color: "red" }}>
+                  Invalid email format
+                </Typography>
+              )}
             </FormControl>
 
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>Enter OTP</InputLabel>
-              <Input
-                name="otp"
-                type="password"
+              <OTPInput
                 value={inputs.otp}
-                onChange={handleInputChange}
-                required
-                sx={{ color: "#fff" }}
-                disabled={!isOTPFieldEnabled} // Disable the input field if isOTPFieldEnabled is false
+                onChange={(otp) => setInputs({ ...inputs, otp })}
+                numInputs={4}
+                isInputNum
+                containerStyle={{ marginTop: "50px", marginLeft: "12px" }}
+                separator={<span>-</span>}
+                inputStyle={{
+                  borderRadius: "10px",
+                  border: "1px solid ",
+                  padding: "10px",
+                  width: "40px",
+                  color: "black",
+                  marginRight: "7px",
+                  backgroundColor: isOTPFieldEnabled ? "#858BC5" : " #A0A8D0",
+                  pointerEvents: isOTPFieldEnabled ? "auto" : "none",
+                }}
+                focusStyle={{ borderColor: "#858BC5" }}
+                hasErrored={false}
+                renderInput={(props, index) => (
+                  <input
+                    {...props}
+                    disabled={!isOTPFieldEnabled}
+                    style={{
+                      backgroundColor: isOTPFieldEnabled ? "#858BC5" : " #A0A8D0",
+                      borderRadius: "10px",
+                      border: "1px solid ",
+                      padding: "10px",
+                      width: "40px",
+                      color: "black",
+                      marginRight: "7px",
+                    }}
+                  />
+                )}
               />
             </FormControl>
 
@@ -134,10 +167,12 @@ const ForgotComponent = () => {
                   fontSize: "1rem",
                   fontWeight: "600",
                   transition: "background-color 0.4s ease",
-                  backgroundColor: isEmailValid(inputs.email) ? "#858BC5" : "grey", // Change button color based on email validity
+                  backgroundColor: isEmailValid(inputs.email)
+                    ? "#858BC5"
+                    : "grey",
                 }}
                 color="primary"
-                disabled={!isEmailValid(inputs.email)} // Disable the button if email is not valid
+                disabled={!isEmailValidState}
               >
                 Get OTP
               </Button>
@@ -160,7 +195,7 @@ const ForgotComponent = () => {
                   margin: "25px 0 10px",
                 }}
               >
-                Remembered the password?{" "}
+                Remember the password?{" "}
                 <Link href="/" color="inherit" underline="hover">
                   Login
                 </Link>

@@ -17,14 +17,32 @@ const LoginComponent = () => {
     email: "",
     password: "",
     rememberMe: true,
+    isEmailValid: true, // Added state for email validity
   });
+
+  const isEmailValid = (email) => {
+    if (email.trim() === "") {
+      return true; // Return true if the email field is empty
+    }
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
+    if (name === "email") {
+      setInputs({
+        ...inputs,
+        [name]: value,
+        isEmailValid: isEmailValid(value), // Update email validity state
+      });
+    } else {
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    }
   };
 
   const handleRememberMeChange = (event) => {
@@ -37,8 +55,8 @@ const LoginComponent = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-
     console.log(inputs);
+    // Add logic for handling login
   };
 
   return (
@@ -85,7 +103,13 @@ const LoginComponent = () => {
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
               />
+              {!inputs.isEmailValid && ( // Display invalid message if email is not valid
+                <Typography sx={{ color: "red" }}>
+                  Invalid email format
+                </Typography>
+              )}
             </FormControl>
+
             <FormControl
               sx={{ width: "100%", color: "#fff", marginBottom: "30px" }}
             >
@@ -99,6 +123,7 @@ const LoginComponent = () => {
                 sx={{ color: "#fff" }}
               />
             </FormControl>
+
             <div
               className="forget"
               style={{
@@ -145,6 +170,7 @@ const LoginComponent = () => {
                 backgroundColor: "#858BC5",
               }}
               color="primary"
+              disabled={!inputs.isEmailValid} // Disable button if email is not valid
             >
               Log in
             </Button>

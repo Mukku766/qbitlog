@@ -15,14 +15,25 @@ const SignupComponent = () => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
-    ConfirmPassword: "",
+    confirmPassword: "",
+    isEmailValid: true,
   });
+
+  const isEmailValid = (email) => {
+    if (email.trim() === "") {
+      return false; // Return false if the email field is empty
+    }
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputs({
       ...inputs,
       [name]: value,
+      isEmailValid: name === "email" ? isEmailValid(value) : inputs.isEmailValid,
     });
   };
 
@@ -39,7 +50,6 @@ const SignupComponent = () => {
       </div>
       <Box
         sx={{
-          // position: "relative",
           maxWidth: "400px",
           backgroundColor: "transparent",
           border: "2px solid rgba(255, 255, 255, 0.5)",
@@ -75,10 +85,13 @@ const SignupComponent = () => {
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
               />
+              {!inputs.isEmailValid && (
+                <Typography sx={{ color: "red" }}>
+                  Invalid email format
+                </Typography>
+              )}
             </FormControl>
-            <FormControl
-              sx={{ width: "100%", color: "#fff", marginBottom: "30px" }}
-            >
+            <FormControl sx={{ width: "100%", color: "#fff", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>Password</InputLabel>
               <Input
                 name="password"
@@ -89,14 +102,12 @@ const SignupComponent = () => {
                 sx={{ color: "#fff" }}
               />
             </FormControl>
-            <FormControl
-              sx={{ width: "100%", color: "#fff", marginBottom: "30px" }}
-            >
+            <FormControl sx={{ width: "100%", color: "#fff", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>Confirm Password</InputLabel>
               <Input
-                name="ConfirmPassword"
+                name="confirmPassword"
                 type="password"
-                value={inputs.ConfirmPassword}
+                value={inputs.confirmPassword}
                 onChange={handleInputChange}
                 required
                 sx={{ color: "#fff" }}
@@ -115,8 +126,9 @@ const SignupComponent = () => {
                 backgroundColor: "#858BC5",
               }}
               color="primary"
+              disabled={!inputs.isEmailValid}
             >
-              Sign Up{" "}
+              Sign Up
             </Button>
 
             <div
