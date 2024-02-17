@@ -71,6 +71,8 @@ const ChangePasswordComponent = () => {
                 type="text"
                 name="NewPassword"
                 required
+                inputProps={{ maxLength: 35 }}
+
                 value={inputs.NewPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
@@ -82,6 +84,8 @@ const ChangePasswordComponent = () => {
                 type="text"
                 name="ConfirmPassword"
                 required
+                inputProps={{ maxLength: 35 }}
+
                 value={inputs.ConfirmPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}

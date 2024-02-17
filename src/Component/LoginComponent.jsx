@@ -99,11 +99,12 @@ const LoginComponent = () => {
                 autoComplete="false"
                 name="email"
                 required
+                inputProps={{ maxLength: 35 }}
                 value={inputs.email}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
               />
-              {!inputs.isEmailValid && ( // Display invalid message if email is not valid
+              {!inputs.isEmailValid && ( 
                 <Typography sx={{ color: "red" }}>
                   Invalid email format
                 </Typography>
@@ -120,6 +121,7 @@ const LoginComponent = () => {
                 value={inputs.password}
                 onChange={handleInputChange}
                 required
+                inputProps={{ maxLength: 35 }}
                 sx={{ color: "#fff" }}
               />
             </FormControl>

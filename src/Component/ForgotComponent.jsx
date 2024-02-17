@@ -9,6 +9,8 @@ import {
   Typography,
   Box,
   Input,
+  Stack,
+  Divider,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import OTPInput from "react-otp-input";
@@ -24,6 +26,7 @@ const ForgotComponent = () => {
   const [isOTPFieldEnabled, setIsOTPFieldEnabled] = useState(false);
   const [isEmailFieldLocked, setIsEmailFieldLocked] = useState(false);
   const [isEmailValidState, setIsEmailValidState] = useState(true);
+  const [showTryAnotherEmail, setShowTryAnotherEmail] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -35,14 +38,28 @@ const ForgotComponent = () => {
   };
 
   const isEmailValid = (email) => {
+    if (email.trim() === "") {
+      return true; // Return true if the email field is empty
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const handleGetOTP = () => {
-    console.log(inputs);
-    setIsOTPFieldEnabled(true);
-    setIsEmailFieldLocked(true);
+    if (!isEmailValidState) {
+      setShowTryAnotherEmail(true);
+    } else {
+      console.log(inputs);
+      setIsOTPFieldEnabled(true);
+      setIsEmailFieldLocked(true);
+    }
+  };
+
+  const handleTryAnotherEmail = () => {
+    setShowTryAnotherEmail(false);
+    setIsEmailFieldLocked(false);
+    setInputs({ ...inputs, email: "" }); // Clear the email input field
   };
 
   const handleConfirmOTP = () => {
@@ -57,7 +74,7 @@ const ForgotComponent = () => {
       </div>
       <Box
         sx={{
-          maxWidth: "400px",
+          maxWidth: "370px",
           backgroundColor: "transparent",
           border: "2px solid rgba(255, 255, 255, 0.5)",
           borderRadius: "20px",
@@ -88,55 +105,74 @@ const ForgotComponent = () => {
                 type="email"
                 name="email"
                 required
+                inputProps={{ maxLength: 35 }}
                 value={inputs.email}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
                 disabled={isEmailFieldLocked}
               />
-              {!isEmailValidState && (
+              {!isEmailValidState && !showTryAnotherEmail && (
                 <Typography sx={{ color: "red" }}>
                   Invalid email format
+                </Typography>
+              )}
+              {showTryAnotherEmail && (
+                <Typography
+                  sx={{ color: "green", cursor: "pointer" }}
+                  onClick={handleTryAnotherEmail}
+                >
+                  Try with another email
                 </Typography>
               )}
             </FormControl>
 
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>Enter OTP</InputLabel>
-              <OTPInput
-                value={inputs.otp}
-                onChange={(otp) => setInputs({ ...inputs, otp })}
-                numInputs={4}
-                isInputNum
-                containerStyle={{ marginTop: "50px", marginLeft: "12px" }}
-                separator={<span>-</span>}
-                inputStyle={{
-                  borderRadius: "10px",
-                  border: "1px solid ",
-                  padding: "10px",
-                  width: "40px",
-                  color: "black",
-                  marginRight: "7px",
-                  backgroundColor: isOTPFieldEnabled ? "#858BC5" : " #A0A8D0",
-                  pointerEvents: isOTPFieldEnabled ? "auto" : "none",
-                }}
-                focusStyle={{ borderColor: "#858BC5" }}
-                hasErrored={false}
-                renderInput={(props, index) => (
-                  <input
-                    {...props}
-                    disabled={!isOTPFieldEnabled}
-                    style={{
-                      backgroundColor: isOTPFieldEnabled ? "#858BC5" : " #A0A8D0",
-                      borderRadius: "10px",
-                      border: "1px solid ",
-                      padding: "10px",
-                      width: "40px",
-                      color: "black",
-                      marginRight: "7px",
-                    }}
-                  />
-                )}
-              />
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ justifyContent: "center", marginLeft: 3 }}
+                divider={<Divider orientation="vertical" flexItem />}
+              >
+                <OTPInput
+                  value={inputs.otp}
+                  onChange={(otp) => setInputs({ ...inputs, otp })}
+                  numInputs={4}
+                  isInputNum
+                  containerStyle={{ marginTop: "60px" }}
+                  separator={<span>-</span>}
+                  inputStyle={{
+                    borderRadius: "10px",
+                    border: "1px solid ",
+                    padding: "10px",
+                    width: "40px",
+                    color: "black",
+                    marginRight: "27px",
+                    backgroundColor: isOTPFieldEnabled ? "#858BC5" : " #A0A8D0",
+                    pointerEvents: isOTPFieldEnabled ? "auto" : "none",
+                  }}
+                  focusStyle={{ borderColor: "#858BC5" }}
+                  hasErrored={false}
+                  renderInput={(props, index) => (
+                    <input
+                      {...props}
+                      disabled={!isOTPFieldEnabled}
+                      style={{
+                        backgroundColor: isOTPFieldEnabled
+                          ? "#858BC5"
+                          : " #A0A8D0",
+                        borderRadius: "10px",
+                        border: "1px solid ",
+                        padding: "10px",
+
+                        width: "40px",
+                        color: "black",
+                        marginRight: "27px",
+                      }}
+                    />
+                  )}
+                />
+              </Stack>
             </FormControl>
 
             {isOTPFieldEnabled ? (
