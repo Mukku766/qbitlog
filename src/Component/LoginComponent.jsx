@@ -20,6 +20,9 @@ const LoginComponent = () => {
     isEmailValid: true, // Added state for email validity
   });
 
+  // State for tracking if both email and password are filled
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const isEmailValid = (email) => {
     if (email.trim() === "") {
       return true; // Return true if the email field is empty
@@ -43,6 +46,9 @@ const LoginComponent = () => {
         [name]: value,
       });
     }
+
+    // Check if both email and password are filled
+    setIsFormValid(inputs.email !== "" && inputs.password !== "" && inputs.isEmailValid);
   };
 
   const handleRememberMeChange = (event) => {
@@ -172,7 +178,7 @@ const LoginComponent = () => {
                 backgroundColor: "#858BC5",
               }}
               color="primary"
-              disabled={!inputs.isEmailValid} // Disable button if email is not valid
+              disabled={!isFormValid} // Disable button if form is not valid
             >
               Log in
             </Button>
