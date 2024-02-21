@@ -5,7 +5,6 @@ import {
   Input,
   FormControl,
   InputLabel,
-  Checkbox,
   Link,
   Container,
   Typography,
@@ -18,18 +17,24 @@ const ChangePasswordComponent = () => {
     ConfirmPassword: "",
   });
 
+  const [isPasswordMatch, setIsPasswordMatch] = useState(false);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
+
+    // Check if passwords match
+    setIsPasswordMatch(inputs.NewPassword === value);
   };
 
   const UpdatePassword = (event) => {
     event.preventDefault();
 
     console.log(inputs);
+    // Add logic to update password
   };
 
   return (
@@ -39,7 +44,6 @@ const ChangePasswordComponent = () => {
       </div>
       <Box
         sx={{
-          // position: "relative",
           maxWidth: "400px",
           backgroundColor: "transparent",
           border: "2px solid rgba(255, 255, 255, 0.5)",
@@ -68,11 +72,11 @@ const ChangePasswordComponent = () => {
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>New Password</InputLabel>
               <Input
-                type="text"
+                type="password"
                 name="NewPassword"
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
-
                 value={inputs.NewPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
@@ -81,15 +85,20 @@ const ChangePasswordComponent = () => {
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <InputLabel sx={{ color: "#fff" }}>Confirm Password</InputLabel>
               <Input
-                type="text"
+                type="password"
                 name="ConfirmPassword"
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
-
                 value={inputs.ConfirmPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
               />
+              {!isPasswordMatch && inputs.ConfirmPassword && (
+                <Typography sx={{ color: "red" }}>
+                  Passwords do not match
+                </Typography>
+              )}
             </FormControl>
 
             <Button
@@ -102,9 +111,10 @@ const ChangePasswordComponent = () => {
                 fontSize: "1rem",
                 fontWeight: "600",
                 transition: "background-color 0.4s ease",
-                backgroundColor: "#858BC5",
+                backgroundColor: isPasswordMatch ? "#858BC5" : "grey",
               }}
               color="primary"
+              disabled={!isPasswordMatch}
             >
               Confirm
             </Button>

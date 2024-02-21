@@ -105,6 +105,7 @@ const ForgotComponent = () => {
                 type="email"
                 name="email"
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 value={inputs.email}
                 onChange={handleInputChange}
@@ -186,32 +187,37 @@ const ForgotComponent = () => {
                   fontSize: "1rem",
                   fontWeight: "600",
                   transition: "background-color 0.4s ease",
-                  backgroundColor: "#858BC5",
+                  backgroundColor:
+                    isEmailValid(inputs.email) && inputs.otp.length === 4
+                      ? "#858BC5"
+                      : "grey",
                 }}
                 color="primary"
+                disabled={
+                  !isEmailValid(inputs.email) || inputs.otp.length !== 4
+                } // Disable if email is invalid or OTP is not complete
               >
                 Confirm OTP
               </Button>
             ) : (
               <Button
-                onClick={handleGetOTP}
-                variant="contained"
-                sx={{
-                  width: "100%",
-                  height: "40px",
-                  borderRadius: "40px",
-                  fontSize: "1rem",
-                  fontWeight: "600",
-                  transition: "background-color 0.4s ease",
-                  backgroundColor: isEmailValid(inputs.email)
-                    ? "#858BC5"
-                    : "grey",
-                }}
-                color="primary"
-                disabled={!isEmailValidState}
-              >
-                Get OTP
-              </Button>
+  onClick={handleGetOTP}
+  variant="contained"
+  sx={{
+    width: "100%",
+    height: "40px",
+    borderRadius: "40px",
+    fontSize: "1rem",
+    fontWeight: "600",
+    transition: "background-color 0.4s ease",
+    backgroundColor: isEmailValid(inputs.email) ? "#858BC5" : "grey",
+  }}
+  color="primary"
+  disabled={!inputs.email || !isEmailValidState} // Disable if email is empty or invalid
+>
+  Get OTP
+</Button>
+
             )}
 
             <div

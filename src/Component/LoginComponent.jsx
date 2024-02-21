@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo1.png";
 import {
   Button,
@@ -17,38 +17,34 @@ const LoginComponent = () => {
     email: "",
     password: "",
     rememberMe: true,
-    isEmailValid: true, // Added state for email validity
+    isEmailValid: true, 
   });
 
-  // State for tracking if both email and password are filled
   const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const isBothFieldsFilled =
+      inputs.email.trim() !== "" && inputs.password.trim() !== "";
+    setIsFormValid(isBothFieldsFilled && inputs.isEmailValid);
+  }, [inputs.email, inputs.password, inputs.isEmailValid]);
 
   const isEmailValid = (email) => {
     if (email.trim() === "") {
-      return true; // Return true if the email field is empty
+      return true;
     }
-    // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === "email") {
-      setInputs({
-        ...inputs,
-        [name]: value,
-        isEmailValid: isEmailValid(value), // Update email validity state
-      });
-    } else {
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    }
+    const isEmailField = name === "email";
 
-    // Check if both email and password are filled
-    setIsFormValid(inputs.email !== "" && inputs.password !== "" && inputs.isEmailValid);
+    setInputs({
+      ...inputs,
+      [name]: value,
+      isEmailValid: isEmailField ? isEmailValid(value) : inputs.isEmailValid,
+    });
   };
 
   const handleRememberMeChange = (event) => {
@@ -62,7 +58,6 @@ const LoginComponent = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     console.log(inputs);
-    // Add logic for handling login
   };
 
   return (
@@ -102,7 +97,7 @@ const LoginComponent = () => {
               <InputLabel sx={{ color: "#fff" }}>Email</InputLabel>
               <Input
                 type="email"
-                autoComplete="false"
+                autoComplete="off"
                 name="email"
                 required
                 inputProps={{ maxLength: 35 }}
@@ -110,7 +105,7 @@ const LoginComponent = () => {
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
               />
-              {!inputs.isEmailValid && ( 
+              {!inputs.isEmailValid && (
                 <Typography sx={{ color: "red" }}>
                   Invalid email format
                 </Typography>
@@ -124,6 +119,7 @@ const LoginComponent = () => {
               <Input
                 name="password"
                 type="password"
+                autoComplete="off"
                 value={inputs.password}
                 onChange={handleInputChange}
                 required
@@ -178,7 +174,7 @@ const LoginComponent = () => {
                 backgroundColor: "#858BC5",
               }}
               color="primary"
-              disabled={!isFormValid} // Disable button if form is not valid
+              disabled={!isFormValid} 
             >
               Log in
             </Button>

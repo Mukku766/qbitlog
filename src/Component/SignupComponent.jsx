@@ -85,6 +85,7 @@ const SignupComponent = () => {
                 type="email"
                 name="email"
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 value={inputs.email}
                 onChange={handleInputChange}
@@ -106,6 +107,7 @@ const SignupComponent = () => {
                 value={inputs.password}
                 onChange={handleInputChange}
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 sx={{ color: "#fff" }}
               />
@@ -120,6 +122,7 @@ const SignupComponent = () => {
                 value={inputs.confirmPassword}
                 onChange={handleInputChange}
                 required
+                autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 sx={{ color: "#fff" }}
               />
