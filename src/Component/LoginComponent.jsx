@@ -63,7 +63,7 @@ const LoginComponent = () => {
   return (
     <Container>
       <div className="logo">
-        <img src={logo} alt="Your Logo" width="150vw" height="auto" />
+        <img src={logo} alt="Your Logo" width="20%" height="auto" />
       </div>
       <Box
         sx={{

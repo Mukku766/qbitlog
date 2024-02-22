@@ -45,7 +45,7 @@ function MenuComponent(props) {
     <div>
       <Toolbar />
       <div className="logo">
-        <img src={logo} alt="Your Logo" width="150vw" height="auto" />
+        <img src={logo} alt="Your Logo" width="150vw"  height="auto" style={{marginLeft: "25px"}} />
       </div>
       <List sx={{ p: 2, mt:2, color: "white", fontSize: "2.2rem", justifyContent: "center"}}>
         {["All Logs", "Update Logs", "Update Password", "Profile","Log out"].map(
