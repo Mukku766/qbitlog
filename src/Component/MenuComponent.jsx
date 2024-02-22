@@ -48,7 +48,7 @@ function MenuComponent(props) {
         <img src={logo} alt="Your Logo" width="150vw" height="auto" />
       </div>
       <List sx={{ p: 2, mt:2, color: "white", fontSize: "2.2rem", justifyContent: "center"}}>
-        {["All Logs", "Update Logs", "Notifications", "Profile"].map(
+        {["All Logs", "Update Logs", "Update Password", "Profile","Log out"].map(
           (text, index) => (
             <ListItem key={text} disablePadding sx={{ width: "220px" }}>
               <ListItemButton sx={{ "&:hover": { backgroundColor: "#0CAF60", borderRadius: "20px" } }}>
