@@ -1,6 +1,5 @@
 import * as React from "react";
 import logo from "./logo1.png";
-
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,15 +15,56 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import UpdateIcon from "@mui/icons-material/Update";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-
+import UpdateLogsComponent from "./UpdateLogComponent";
+import UpdatePassword from "./UpdatePassword";
 const drawerWidth = 250;
+
+function PageAllLogs() {
+  return (
+    <div>
+      <Typography variant="h6">All Logs Page</Typography>
+      {/* Your content for All Logs page */}
+    </div>
+  );
+}
+
+function PageUpdateLogs() {
+  return (
+    <div>
+      <UpdateLogsComponent />
+    </div>
+  );
+}
+
+function PageUpdatePassword() {
+  return (
+    <div>
+      <UpdatePassword />
+    </div>
+  );
+}
+
+function PageProfile() {
+  return (
+    <div>
+      <Typography variant="h6">Profile Page</Typography>
+      {/* Your content for Profile page */}
+    </div>
+  );
+}
 
 function MenuComponent(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState("All Logs");
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -41,34 +81,73 @@ function MenuComponent(props) {
     }
   };
 
+  const handleMenuItemClick = (text) => {
+    setSelectedItem(text);
+    handleDrawerClose();
+  };
+
   const drawer = (
     <div>
       <Toolbar />
       <div className="logo">
-        <img src={logo} alt="Your Logo" width="150vw"  height="auto" style={{marginLeft: "25px"}} />
+        <img src={logo} alt="Your Logo" width="150vw" height="auto" />
       </div>
-      <List sx={{ p: 2, mt:2, color: "white", fontSize: "2.2rem", justifyContent: "center"}}>
-        {["All Logs", "Update Logs", "Update Password", "Profile","Log out"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding sx={{ width: "220px" }}>
-              <ListItemButton sx={{ "&:hover": { backgroundColor: "#0CAF60", borderRadius: "20px" } }}>
-    <ListItemIcon>
-      {index % 2 === 0 ? <InboxIcon sx={{ color: "white" }} /> : <MailIcon sx={{ color: "white" }} />}
-    </ListItemIcon>
-    <ListItemText 
-      primary={text}
-    />
-  </ListItemButton>
-</ListItem>
-          )
-        )}
+      <List
+        sx={{
+          p: 2,
+          mt: 2,
+          color: "white",
+          fontSize: "2.2rem",
+          justifyContent: "center",
+        }}
+      >
+        {[
+          "All Logs",
+          "Update Logs",
+          "Update Password",
+          "Profile",
+          "Log out",
+        ].map((text, index) => (
+          <ListItem
+            key={text}
+            disablePadding
+            sx={{ width: "220px" }}
+            onClick={() => handleMenuItemClick(text)}
+          >
+            <ListItemButton
+              sx={{
+                "&:hover": { backgroundColor: "#0CAF60", borderRadius: "20px" },
+              }}
+            >
+              <ListItemIcon>
+                {index === 0 && <ListAltIcon sx={{ color: "white" }} />}
+                {index === 1 && <UpdateIcon sx={{ color: "white" }} />}
+                {index === 2 && <VpnKeyIcon sx={{ color: "white" }} />}
+                {index === 3 && <AccountCircleIcon sx={{ color: "white" }} />}
+                {index === 4 && <ExitToAppIcon sx={{ color: "white" }} />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );
 
-  // Remove this const when copying and pasting into your project.
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const renderPage = () => {
+    switch (selectedItem) {
+      case "All Logs":
+        return <PageAllLogs />;
+      case "Update Logs":
+        return <PageUpdateLogs />;
+      case "Update Password":
+        return <PageUpdatePassword />;
+      case "Profile":
+        return <PageProfile />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -79,9 +158,8 @@ function MenuComponent(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "#0CAF60",
-          minHeight: "100px",
           "& .MuiToolbar-root": {
-            minHeight: "100px", // Change the minimum height as per your requirement
+            minHeight: "80px", // Change the minimum height as per your requirement
           },
         }}
       >
@@ -95,8 +173,8 @@ function MenuComponent(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h4" noWrap component="div">
-            All Logs
+          <Typography variant="h5" noWrap component="div">
+            {selectedItem}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -111,21 +189,20 @@ function MenuComponent(props) {
         }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#021529",
             },
           }}
         >
@@ -145,18 +222,9 @@ function MenuComponent(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <Toolbar />
-        <Typography paragraph>hello sir</Typography>
-        <Typography paragraph>how are you</Typography>
-      </Box>
+     
+        {renderPage()}
+      
     </Box>
   );
 }

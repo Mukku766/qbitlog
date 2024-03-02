@@ -11,8 +11,11 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
 const LoginComponent = () => {
+  const navigate = useNavigate(); // Initialize the navigate function
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -58,6 +61,8 @@ const LoginComponent = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     console.log(inputs);
+    navigate("Home/");
+
   };
 
   return (
