@@ -136,7 +136,7 @@ function UpdateLogsComponent() {
     id="log-description"
     label="Log Description"
     multiline
-    rows={3}
+    rows={2}
     autoComplete="off"
     variant="outlined"
     value={logDescription}
@@ -179,7 +179,8 @@ function UpdateLogsComponent() {
         color="primary"
         onClick={handleAddLog}
         disabled={isButtonDisabled}
-        sx={{ mt: 2, backgroundColor: "#0CAF60" }}
+        // onFocus={backgroundColor: "#858BC5"}
+        sx={{ mt: 2, backgroundColor: "#858BC5", borderRadius:"200px" }}
       >
         Add Log
       </Button>

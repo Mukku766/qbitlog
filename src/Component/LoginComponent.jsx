@@ -13,6 +13,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
+
+import { loginUser } from "./Services/api";
+
+
 const LoginComponent = () => {
   const navigate = useNavigate(); // Initialize the navigate function
 
@@ -24,6 +28,7 @@ const LoginComponent = () => {
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const isBothFieldsFilled =
@@ -58,11 +63,17 @@ const LoginComponent = () => {
     });
   };
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    console.log(inputs);
-    navigate("Home/");
 
+    try {
+      const { email, password } = inputs;
+      const userData = await loginUser(email, password);
+      console.log("User logged in:", userData);
+      navigate("Home/");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (

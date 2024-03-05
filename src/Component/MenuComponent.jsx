@@ -116,7 +116,7 @@ function MenuComponent(props) {
           >
             <ListItemButton
               sx={{
-                "&:hover": { backgroundColor: "#0CAF60", borderRadius: "20px" },
+                "&:hover": { backgroundColor: "#858BC5", borderRadius: "300px" },
               }}
             >
               <ListItemIcon>
@@ -157,7 +157,7 @@ function MenuComponent(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "#0CAF60",
+          backgroundColor: "#021529",
           "& .MuiToolbar-root": {
             minHeight: "80px", // Change the minimum height as per your requirement
           },
