@@ -10,6 +10,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { signup } from "./Services/api";
 
 const SignupComponent = () => {
   const [inputs, setInputs] = useState({
@@ -17,6 +18,7 @@ const SignupComponent = () => {
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState('');
 
   const isEmailValid = (email) => {
     if (email.trim() === "") {
@@ -42,9 +44,23 @@ const SignupComponent = () => {
     });
   };
 
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
-    console.log(inputs);
+
+    try {
+      // Use the signup function from apiService
+      const response = await signup({
+        email: inputs.email,
+        password: inputs.password,
+      });
+
+      // Handle the response, e.g., show a success message or redirect to login page
+      console.log(response);
+    } catch (error) {
+      // Handle errors, e.g., show an error message to the user
+      setError('An error occurred during signup. Please try again.');
+      console.error(error);
+    }
   };
 
   return (
