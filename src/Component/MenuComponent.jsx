@@ -35,7 +35,7 @@ function PageAllLogs() {
   );
 }
 
-function PageUpdateLogs() {
+function PageAddLogs() {
   return (
     <div>
       <UpdateLogsComponent />
@@ -103,7 +103,7 @@ function MenuComponent(props) {
       >
         {[
           "All Logs",
-          "Update Logs",
+          "Add Logs",
           "Update Password",
           "Profile",
           "Log out",
@@ -138,8 +138,8 @@ function MenuComponent(props) {
     switch (selectedItem) {
       case "All Logs":
         return <PageAllLogs />;
-      case "Update Logs":
-        return <PageUpdateLogs />;
+      case "Add Logs":
+        return <PageAddLogs />;
       case "Update Password":
         return <PageUpdatePassword />;
       case "Profile":

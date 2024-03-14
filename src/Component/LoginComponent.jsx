@@ -11,14 +11,14 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useNavigate } from "react-router-dom"; 
 
 
 import { loginUser } from "./Services/api";
 
 
 const LoginComponent = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const [inputs, setInputs] = useState({
     email: "",
