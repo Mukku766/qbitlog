@@ -90,7 +90,7 @@ function MenuComponent(props) {
     <div>
       <Toolbar />
       <div className="logo">
-        {/* <img src={logo} alt="Your Logo" width="150vw" height="auto" /> */}
+        <img src={logo} alt="Your Logo" width="150vw" height="auto" />
       </div>
       <List
         sx={{
@@ -183,8 +183,9 @@ function MenuComponent(props) {
         sx={{
           width: { sm: drawerWidth },
           flexShrink: { sm: 0 },
+         
           ".css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
-            backgroundColor: "#021529",
+            backgroundColor: "red",
           },
         }}
         aria-label="mailbox folders"
@@ -194,6 +195,7 @@ function MenuComponent(props) {
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
+          
           ModalProps={{
             keepMounted: true,
           }}
