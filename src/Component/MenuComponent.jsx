@@ -185,7 +185,7 @@ function MenuComponent(props) {
           flexShrink: { sm: 0 },
          
           ".css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
-            backgroundColor: "red",
+            backgroundColor: "#021529",
           },
         }}
         aria-label="mailbox folders"

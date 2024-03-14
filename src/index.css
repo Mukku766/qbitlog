@@ -33,5 +33,10 @@ body {
 
 
   .css-1l8j5k8 {
-    background-color: rgb(153, 18, 18);
+    background-color: rgb(153, 18, 18) !important;
   }
+
+
+  .css-19cz0wk .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+    background-color: red !important;
+}
