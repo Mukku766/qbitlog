@@ -90,7 +90,7 @@ function MenuComponent(props) {
     <div>
       <Toolbar />
       <div className="logo">
-        <img src={logo} alt="Your Logo" width="150vw" height="auto" />
+        {/* <img src={logo} alt="Your Logo" width="150vw" height="auto" /> */}
       </div>
       <List
         sx={{
