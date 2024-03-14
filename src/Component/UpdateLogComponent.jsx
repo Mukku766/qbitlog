@@ -17,15 +17,15 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const projects = [
   {
-    value: "project1",
+    value: "QBit Logs",
     label: "QBit Logs",
   },
   {
-    value: "project2",
+    value: "QBit Suite",
     label: "QBit Suite",
   },
   {
-    value: "project3",
+    value: "Ragnar",
     label: "Ragnar",
   },
 ];
