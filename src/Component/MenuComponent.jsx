@@ -22,6 +22,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import AllLog from "./AllLogs";
 import UpdateLogsComponent from "./UpdateLogComponent";
 import UpdatePassword from "./UpdatePassword";
 const drawerWidth = 250;
@@ -29,8 +30,7 @@ const drawerWidth = 250;
 function PageAllLogs() {
   return (
     <div>
-      <Typography variant="h6">All Logs Page</Typography>
-      {/* Your content for All Logs page */}
+      <AllLog />
     </div>
   );
 }
