@@ -139,9 +139,20 @@ function UpdateLogsComponent() {
     setMinutes('');
     setLogDescription('');
   };
-
+  const calculateTotalTimeInTable = () => {
+    let total = 0;
+    logs.forEach(log => {
+      total += parseInt(log.hours) + parseInt(log.minutes) / 60;
+    });
+    return total;
+  };
+  
   const handleSubmitLogs = () => {
+    // Calculate total time before submitting logs
+    const totalTimeInTable = calculateTotalTimeInTable();
+
     // Your logic for submitting logs
+
     console.log('Submitting logs...');
   };
 
@@ -154,6 +165,7 @@ function UpdateLogsComponent() {
     minutes &&
     logDescription
   );
+  const isButtonDisabledd = !(logDate && logType && project && calculateTotalTimeInTable() >= 8);
 
   return (
     <Container>
@@ -304,15 +316,7 @@ function UpdateLogsComponent() {
           {selectedLogIndex !== null ? 'Update Log' : 'Add Log'}
         </Button>
 
-        {/* <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmitLogs}
-          disabled={isButtonDisabled}
-          sx={{ mt: 2, borderRadius: '50px', bgcolor: '#858BC5' }}
-        >
-          Submit Logs
-        </Button> */}
+        
       </Box>
       <Box
         p={3}
@@ -323,7 +327,7 @@ function UpdateLogsComponent() {
         borderRadius={4}
         style={{ backdropFilter: 'blur(12px)' }}
       >
-       <TableContainer component={Box}>
+        <TableContainer component={Box}>
   <Table>
     <TableHead>
       <TableRow>
@@ -359,6 +363,15 @@ function UpdateLogsComponent() {
   </Table>
 </TableContainer>
 
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmitLogs}
+          disabled={isButtonDisabledd}
+          sx={{ mt: 2, borderRadius: '50px', bgcolor: '#858BC5' }}
+        >
+          Submit Logs
+        </Button>
       </Box>
     </Container>
   );
