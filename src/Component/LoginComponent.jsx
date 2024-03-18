@@ -68,24 +68,20 @@ const LoginComponent = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request to your backend API endpoint for user signup
       const response = await axios.post("https://qbitlog-trainee.onrender.com/login", {
         email: inputs.email,
         password: inputs.password,
       });
 
-      // Handle the response, e.g., show a success message or redirect to login page
-      console.log(response.data); // Assuming response contains data
+      console.log(response.data); 
 
-      // Reset form inputs after successful signup
       setInputs({
         email: "",
         password: "",
         confirmPassword: "",
-        isFormValid: false, // Reset form validity
+        isFormValid: false, 
       });
     } catch (error) {
-      // Handle errors, e.g., show an error message to the user
       setError("An error occurred during signup. Please try again.");
       console.error(error);
     }
