@@ -10,7 +10,9 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { signup } from "./Services/api";
+import axios from "axios";
+
+// import { signup } from "./Services/api";
 
 const SignupComponent = () => {
   const [inputs, setInputs] = useState({
@@ -48,19 +50,27 @@ const SignupComponent = () => {
     event.preventDefault();
 
     try {
-      // Use the signup function from apiService
-      const response = await signup({
+      // Make a POST request to your backend API endpoint for user signup
+      const response = await axios.post("https://qbitlog-trainee.onrender.com/signUp", {
         email: inputs.email,
         password: inputs.password,
       });
 
       // Handle the response, e.g., show a success message or redirect to login page
-      console.log(response);
+      console.log(response.data); // Assuming response contains data
+
+      // Reset form inputs after successful signup
+      setInputs({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        isFormValid: false, // Reset form validity
+      });
     } catch (error) {
       // Handle errors, e.g., show an error message to the user
-      setError('An error occurred during signup. Please try again.');
+      setError("An error occurred during signup. Please try again.");
       console.error(error);
-    }
+    }
   };
 
   return (
