@@ -72,15 +72,16 @@ const LoginComponent = () => {
         email: inputs.email,
         password: inputs.password,
       });
-
+    
       console.log(response.data); 
-
+    
+      // Assuming successful login, reset form inputs
       setInputs({
         email: "",
         password: "",
         confirmPassword: "",
-        isFormValid: false, 
-      });
+        isFormValid: false,
+      });
     } catch (error) {
       setError("An error occurred during signup. Please try again.");
       console.error(error);
