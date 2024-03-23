@@ -8,7 +8,7 @@ import TableCell from '@mui/material/TableCell';
 import { MenuItem, Typography, TextField, Button, Box, Grid } from '@mui/material'; // Import MenuItem here
 
 
-function AllLogs({ logs, onDeleteLog, onUpdateLog }) {
+function AllLogs({ logs }) {
   const [filter, setFilter] = useState({
     year: '',
     month: '',
@@ -16,8 +16,9 @@ function AllLogs({ logs, onDeleteLog, onUpdateLog }) {
     date: '',
   });
 
-  const years = Array.from({ length: new Date().getFullYear() - 1999 }, (_, index) => 2000 + index);
-  const months = [
+  const years = [new Date().getFullYear()];
+
+    const months = [
     'January', 'February', 'March', 'April', 'May', 'June', 
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
@@ -33,8 +34,14 @@ function AllLogs({ logs, onDeleteLog, onUpdateLog }) {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    setFilter({ ...filter, [name]: value });
+    const updatedFilter = { ...filter, [name]: value };
+    // Enable submit button if year is selected or date is filled
+    const isSubmitEnabled = updatedFilter.year !== '' || updatedFilter.date !== '';
+    // Update state
+    setFilter(updatedFilter);
+    setSubmitEnabled(isSubmitEnabled);
   };
+  
 
   const filteredLogs = logs ? logs.filter((log) => {
     if (filter.year && log.year !== filter.year) return false;
@@ -43,6 +50,9 @@ function AllLogs({ logs, onDeleteLog, onUpdateLog }) {
     if (filter.date && log.date !== filter.date) return false;
     return true;
   }) : [];
+
+
+  const [submitEnabled, setSubmitEnabled] = useState(false);
 
   const weeks = getWeeksOfMonth(filter.year, months.indexOf(filter.month));
 
@@ -134,13 +144,15 @@ function AllLogs({ logs, onDeleteLog, onUpdateLog }) {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ borderRadius: '50px', bgcolor: '#858BC5', color: '#ffffff' }}
-            >
-              Submit
-            </Button>
+          <Button
+  variant="contained"
+  color="primary"
+  sx={{ borderRadius: '50px', bgcolor: '#858BC5', color: '#ffffff' }}
+  disabled={!submitEnabled}
+>
+  Submit
+</Button>
+
           </Grid>
         </Grid>
       </Box>

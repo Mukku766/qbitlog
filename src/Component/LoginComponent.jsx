@@ -11,12 +11,9 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate, Navigate } from "react-router-dom"; // Import Navigate
 
 import axios from "axios";
-
-
-
 
 const LoginComponent = () => {
   const navigate = useNavigate(); 
@@ -72,24 +69,32 @@ const LoginComponent = () => {
         email: inputs.email,
         password: inputs.password,
       });
-    alert("Login Successfull")
+
       console.log(response.data); 
-    
 
       setInputs({
         email: "",
         password: "",
         confirmPassword: "",
-        isFormValid: false,
-        
+        isFormValid: false,
       });
-    navigate('/Home');
+
+      navigate('/Home');
     } catch (error) {
       setError("An error occurred during login. Please try again.");
       alert("Email and Password not Matched")
       console.error(error);
     }
   };
+
+  // Add this check to prevent accessing login page after successful login
+  useEffect(() => {
+    // Assuming you have some way to check authentication status, like checking a token in localStorage
+    const isAuthenticated = localStorage.getItem('token'); // Example: checking if a token exists
+    if (isAuthenticated) {
+      navigate('/Home');
+    }
+  }, []);
 
   return (
     <Container>

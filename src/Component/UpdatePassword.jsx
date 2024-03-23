@@ -55,34 +55,38 @@ const UpdatePassword = () => {
         <section>
           <form>
             
-
+          <Typography color={'#858BC5'} sx={{ my: 1 }}>
+          New Password            </Typography>
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <TextField
                 type="password"
                 name="NewPassword"
                 required
-                label="New Password"
+                variant="standard"
+
                 autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 value={inputs.NewPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
-                InputLabelProps={{ style: { color: "white" } }}
+                InputProps={{ style: { color: "white" } }}
 
               />
             </FormControl>
+            <Typography color={'#858BC5'} sx={{ my: 1 }}>
+            Confirm Password          </Typography>
             <FormControl sx={{ width: "100%", marginBottom: "30px" }}>
               <TextField
                 type="password"
                 name="ConfirmPassword"
                 required
-                label="Confirm Password"
+                variant="standard"
                 autoComplete="off"
                 inputProps={{ maxLength: 35 }}
                 value={inputs.ConfirmPassword}
                 onChange={handleInputChange}
                 sx={{ color: "#fff" }}
-                InputLabelProps={{ style: { color: "white" } }}
+                InputProps={{ style: { color: "white" } }}
 
               />
               {!isPasswordMatch && inputs.ConfirmPassword && (
@@ -98,13 +102,14 @@ const UpdatePassword = () => {
               sx={{
                 width: "100%",
                 height: "40px",
-                borderRadius: "6px",
+                borderRadius: "30px",
                 fontSize: "1rem",
                 fontWeight: "600",
+                
                 transition: "background-color 0.4s ease",
-                backgroundColor: isPasswordMatch ? "#0CAF60" : "grey",
+                backgroundColor: isPasswordMatch ? "#858BC5" : "grey",
               }}
-              color="primary"
+             
               disabled={!isPasswordMatch}
             >
               Confirm
