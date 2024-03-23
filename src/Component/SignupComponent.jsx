@@ -53,6 +53,7 @@ const SignupComponent = () => {
         email: inputs.email,
         password: inputs.password,
       });
+      alert("Sign Up Sucessfull, Now You can Login")
 
       console.log(response.data); 
      
@@ -65,7 +66,9 @@ const SignupComponent = () => {
       });
     } catch (error) {
       setError("An error occurred during signup. Please try again.");
+      alert("This Emial already Exist")
       console.error(error);
+      
     }
   };
 
