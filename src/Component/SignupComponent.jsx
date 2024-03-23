@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-// import { signup } from "./Services/api";
 
 const SignupComponent = () => {
   const [inputs, setInputs] = useState({
