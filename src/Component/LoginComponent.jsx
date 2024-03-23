@@ -72,19 +72,21 @@ const LoginComponent = () => {
         email: inputs.email,
         password: inputs.password,
       });
-    
+    alert("Login Successfull")
       console.log(response.data); 
     
-      navigate('/Home');
 
       setInputs({
         email: "",
         password: "",
         confirmPassword: "",
         isFormValid: false,
+        
       });
+    navigate('/Home');
     } catch (error) {
       setError("An error occurred during login. Please try again.");
+      alert("Email and Password not Matched")
       console.error(error);
     }
   };
