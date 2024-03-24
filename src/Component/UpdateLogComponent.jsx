@@ -165,7 +165,7 @@ function UpdateLogsComponent() {
     minutes &&
     logDescription
   );
-  const isButtonDisabledd = !(logDate && logType && project && calculateTotalTimeInTable() >= 8);
+  const isButtonDisabledd = !(calculateTotalTimeInTable() >= 8);
 
   return (
     <Container>
