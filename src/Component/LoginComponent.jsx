@@ -14,6 +14,7 @@ import {
 import { useNavigate, Navigate } from "react-router-dom"; // Import Navigate
 
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const LoginComponent = () => {
   const navigate = useNavigate(); 
@@ -65,12 +66,13 @@ const LoginComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("https://qbitlog-trainee.onrender.com/login", {
+      const response = await axios.post("https://qbitlog-trainee.onrender.com/api/login", {
         email: inputs.email,
         password: inputs.password,
       });
 
       console.log(response.data); 
+      Cookies.set('token','hshshedn88hdsa')
 
       setInputs({
         email: "",
@@ -95,6 +97,11 @@ const LoginComponent = () => {
       navigate('/Home');
     }
   }, []);
+const token = Cookies.get('token');
+  useEffect(()=>{
+    if(token){
+      navigate('/Home')
+    }  },[])
 
   return (
     <Container>

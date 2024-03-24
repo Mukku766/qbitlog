@@ -49,7 +49,7 @@ const SignupComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("https://qbitlog-trainee.onrender.com/signup", {
+      const response = await axios.post("https://qbitlog-trainee.onrender.com/api/signup", {
         email: inputs.email,
         password: inputs.password,
       });
@@ -67,7 +67,7 @@ const SignupComponent = () => {
     } catch (error) {
       setError("An error occurred during signup. Please try again.");
       alert("This Emial already Exist")
-      console.error(error);
+      console.error(error?.message || error?.response.data ||'This Emial already Exist');
       
     }
   };

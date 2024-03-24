@@ -25,6 +25,9 @@ import Typography from "@mui/material/Typography";
 import AllLog from "./AllLogs";
 import UpdateLogsComponent from "./UpdateLogComponent";
 import UpdatePassword from "./UpdatePassword";
+import { Cookie } from "@mui/icons-material";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 250;
 
 function PageAllLogs() {
@@ -66,6 +69,8 @@ function MenuComponent(props) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState("All Logs");
 
+  const nav = useNavigate();
+
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -85,6 +90,9 @@ function MenuComponent(props) {
     setSelectedItem(text);
     handleDrawerClose();
   };
+
+  const logoutHandler = ()=>{ Cookies.remove('token');  
+  nav('/');}
 
   const drawer = (
     <div>
@@ -106,7 +114,7 @@ function MenuComponent(props) {
           "Add Logs",
           "Update Password",
           "Profile",
-          "Log out",
+          // "Log out",
         ].map((text, index) => (
           <ListItem
             key={text}
@@ -124,12 +132,29 @@ function MenuComponent(props) {
                 {index === 1 && <UpdateIcon sx={{ color: "white" }} />}
                 {index === 2 && <VpnKeyIcon sx={{ color: "white" }} />}
                 {index === 3 && <AccountCircleIcon sx={{ color: "white" }} />}
-                {index === 4 && <ExitToAppIcon sx={{ color: "white" }} />}
+                {/* {index === 4 && <ExitToAppIcon sx={{ color: "white" }} />} */}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
+         <ListItem
+           
+            disablePadding
+            sx={{ width: "220px" }}
+            onClick={logoutHandler}
+          >
+            <ListItemButton
+              sx={{
+                "&:hover": { backgroundColor: "#858BC5", borderRadius: "300px" },
+              }}
+            >
+              <ListItemIcon>
+               <ExitToAppIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary={'Log Out'} />
+            </ListItemButton>
+          </ListItem>
       </List>
     </div>
   );
@@ -144,6 +169,8 @@ function MenuComponent(props) {
         return <PageUpdatePassword />;
       case "Profile":
         return <PageProfile />;
+        case "Log out":
+         
       default:
         return null;
     }
